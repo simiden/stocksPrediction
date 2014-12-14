@@ -30,25 +30,25 @@ def get_historical_quotes(symbol, start_date, end_date):
     if isinstance(end_date, str):
         end_date = dateutil.parser.parse(end_date)
 
-    url = ("http://ichart.yahoo.com/table.csv?"
-           "s=%s&"
-           "d=%s&e=%s&f=%s&"
-           "a=%s&b=%s&c=%s&"
-           "g=d&"
-           "ignore=.csv"
+    url = ('http://ichart.yahoo.com/table.csv?'
+           's=%s&'
+           'd=%s&e=%s&f=%s&'
+           'a=%s&b=%s&c=%s&'
+           'g=d&'
+           'ignore=.csv'
            % (symbol,
               end_date.month - 1, end_date.day, end_date.year,
               start_date.month - 1, start_date.day, start_date.year))
 
     lines = urllib2.urlopen(url).readlines()
-    csv_reader = csv.DictReader(lines[1:], fieldnames=lines[0].strip().split(","))
+    csv_reader = csv.DictReader(lines[1:], fieldnames=lines[0].strip().split(','))
 
     prices = [dict(csv_line) for csv_line in csv_reader]
 
     for price_dict in prices:
-        price_dict["symbol"] = symbol
-        price_dict["source_url"] = url
-        price_dict["source"] = "Yahoo!"
+        price_dict['symbol'] = symbol
+        price_dict['source_url'] = url
+        price_dict['source'] = 'Yahoo!'
 
     return prices
 
@@ -80,10 +80,10 @@ def get_stockslist():
     if os.path.exists(r'/stockslist_new.txt') == False:
         get_stockslist_origin()
     
-    stocks_dict = {}
+    stocks_dict = []
     file_origin = open('stockslist_new.txt').readlines()
     for one in file_origin:
         d = one.split('/')
-        stocks_dict[d[1][0:6]] = d[0]
+        stocks_dict.append((d[1][0:6],d[0]))
     
     return stocks_dict
