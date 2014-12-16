@@ -50,6 +50,7 @@ def get_historical_quotes(symbol, start_date, end_date):
         price_dict['source_url'] = url
         price_dict['source'] = 'Yahoo!'
 
+    prices = prices[::-1]
     return prices
 
 def get_stockslist_origin():

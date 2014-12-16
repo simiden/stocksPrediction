@@ -2,6 +2,7 @@
 
 import os, sys
 import stockquote
+import define_model
 
 # init all
 reload(sys)
@@ -12,12 +13,17 @@ del sys.setdefaultencoding
 #for one in h:
 #	print one
 stock_list = stockquote.get_stockslist()
-history = stockquote.get_historical_quotes(stock_list[0][0]+'.ss', '20100101', '20141231')
-for i in range(history.length()-2, 0):
-	train_model(history, i)
+history = stockquote.get_historical_quotes(stock_list[0][0]+'.ss', '20140101', '20141231')
 
-def train_model(history, index):
-	"""
-	Training the data of ten days. 
-	To predict the trendency of the next day and the next week.
-	"""
+model = define_model.type_model(5)
+model.train_model(history)
+print model.data[0]
+
+
+
+
+
+
+
+
+
